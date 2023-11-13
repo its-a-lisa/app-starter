@@ -20,6 +20,8 @@ import { useRouter } from "next/router";
 import * as p from "@plasmicapp/react-web";
 import * as ph from "@plasmicapp/react-web/lib/host";
 
+import { usePlasmicDataSourceContext } from "@plasmicapp/data-sources-context";
+
 import {
   hasVariant,
   classNames,
@@ -98,6 +100,8 @@ function PlasmicInternal__RenderFunc(props: {
   const $refs = refsRef.current;
 
   const currentUser = p.useCurrentUser?.() || {};
+
+  const dataSourcesCtx = usePlasmicDataSourceContext();
 
   return (
     <React.Fragment>
@@ -327,7 +331,7 @@ function withPlasmicPageGuard<P extends object>(
 ) {
   const PageGuard: React.FC<P> = props => (
     <p.PlasmicPageGuard
-      minRole={null}
+      minRole={"3b12a132-8ecf-46d8-a324-3f246d3fe9d4"}
       appId={"9WWMjYs2gyQXMvMAkxbjFX"}
       authorizeEndpoint={"https://studio.plasmic.app/authorize"}
       canTriggerLogin={false}
