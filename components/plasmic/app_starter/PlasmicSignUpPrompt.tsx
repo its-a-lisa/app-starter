@@ -307,7 +307,7 @@ function PlasmicSignUpPrompt__RenderFunc(props: {
           >
             {hasVariant($state, "isSignUpFlow", "isSignUpFlow")
               ? "Sign up for an account"
-              : "Start your account"}
+              : "Sign into your account"}
           </Button>
           <Loading3SvgrepoComsvgIcon
             className={classNames(projectcss.all, sty.svg__ozq1V, {
