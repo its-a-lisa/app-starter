@@ -19,8 +19,6 @@ import { useRouter } from "next/router";
 
 import * as p from "@plasmicapp/react-web";
 import * as ph from "@plasmicapp/react-web/lib/host";
-import * as plasmicAuth from "@plasmicapp/react-web/lib/auth";
-import { usePlasmicDataSourceContext } from "@plasmicapp/data-sources-context";
 
 import {
   hasVariant,
@@ -100,8 +98,6 @@ function PlasmicInternal__RenderFunc(props: {
   const $refs = refsRef.current;
 
   const currentUser = p.useCurrentUser?.() || {};
-
-  const dataSourcesCtx = usePlasmicDataSourceContext();
 
   return (
     <React.Fragment>
@@ -331,10 +327,10 @@ function withPlasmicPageGuard<P extends object>(
 ) {
   const PageGuard: React.FC<P> = props => (
     <p.PlasmicPageGuard
-      minRole={"3b12a132-8ecf-46d8-a324-3f246d3fe9d4"}
+      minRole={null}
       appId={"9WWMjYs2gyQXMvMAkxbjFX"}
       authorizeEndpoint={"https://studio.plasmic.app/authorize"}
-      canTriggerLogin={true}
+      canTriggerLogin={false}
     >
       <WrappedComponent {...props} />
     </p.PlasmicPageGuard>
@@ -343,34 +339,9 @@ function withPlasmicPageGuard<P extends object>(
   return PageGuard;
 }
 
-function withUsePlasmicAuth<P extends object>(
-  WrappedComponent: React.ComponentType<P>
-) {
-  const WithUsePlasmicAuthComponent: React.FC<P> = props => {
-    const dataSourceCtx = usePlasmicDataSourceContext() ?? {};
-    const { isUserLoading, user, token } = plasmicAuth.usePlasmicAuth({
-      appId: "9WWMjYs2gyQXMvMAkxbjFX"
-    });
-
-    return (
-      <p.PlasmicDataSourceContextProvider
-        value={{
-          ...dataSourceCtx,
-          isUserLoading,
-          userAuthToken: token,
-          user
-        }}
-      >
-        <WrappedComponent {...props} />
-      </p.PlasmicDataSourceContextProvider>
-    );
-  };
-  return WithUsePlasmicAuthComponent;
-}
-
 export const PlasmicInternal = Object.assign(
   // Top-level PlasmicInternal renders the root element
-  withUsePlasmicAuth(withPlasmicPageGuard(makeNodeComponent("root"))),
+  withPlasmicPageGuard(makeNodeComponent("root")),
   {
     // Helper components rendering sub-elements
     appLayout: makeNodeComponent("appLayout"),
