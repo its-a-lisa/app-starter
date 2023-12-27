@@ -24,7 +24,6 @@ function SignUpPrompt_(props: SignUpPromptProps, ref: HTMLElementRefOf<"div">) {
   {...props} 
   isLoading={loading}
       isError={!!formError}
-      errorMessage={formError?.message}
       emailInput={{
         onChange: (e) => setEmail(e.target.value),
       }}
